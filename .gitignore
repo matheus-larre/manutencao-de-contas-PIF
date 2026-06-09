@@ -1,0 +1,9 @@
+# Binários e Executáveis
+*.exe
+sistema_contas
+
+# Arquivos de dados (gerados localmente)
+contas.bin
+
+# Pastas de IDEs
+.vscode/

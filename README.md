@@ -1,47 +1,37 @@
-# Manutenção de Contas - PIF
+# Atividade Somativa: Sistema de Manutenção de Contas (PIF)
 
-Este projeto é um sistema simples de manutenção de contas bancárias desenvolvido em C11 para a disciplina de Programação Imperativa Funcional.
+**Estudante:** Matheus Larré  
+**Curso:** Análise e Desenvolvimento de Sistemas (ADS) - CESAR School  
+**Disciplina:** Programação Imperativa e Funcional  
+**Professor:** Renan Costa Alencar
 
-## Funcionalidades
+---
 
-O sistema permite realizar as seguintes operações em um arquivo binário de registros de tamanho fixo:
+## Sobre a Atividade
 
-1.  **Cadastrar um novo cliente em uma posição específica:** Utiliza `fseek()` para posicionar o ponteiro do arquivo no índice desejado e `fwrite()` para gravar os dados.
-2.  **Consultar um cliente pelo número da conta:** Percorre o arquivo comparando o número da conta fornecido.
-3.  **Atualizar o saldo de um cliente:** Localiza o cliente, posiciona o ponteiro de volta ao início do registro com `fseek()` e sobrescreve com `fwrite()`.
-4.  **Encerrar conta (remover cliente):** Realiza uma "exclusão lógica" marcando o campo `ativo` como `false`.
-5.  **Listar todos os clientes:** Lê sequencialmente o arquivo a partir da posição atual do ponteiro.
-6.  **Restaurar a leitura do arquivo:** Utiliza `rewind()` para voltar o ponteiro para o início do arquivo, permitindo repetir a listagem completa.
-7.  **Encerrar:** Fecha o arquivo e finaliza o programa.
+Este programa foi desenvolvido como parte de uma das atividades somativas da disciplina de PIF. O objetivo principal é colocar em prática os conceitos de manipulação de arquivos em C, utilizando registros de tamanho fixo em um arquivo binário (`contas.bin`).
 
-## Tecnologias Utilizadas
+## Explicação da Implementação
 
--   Linguagem C (Padrão C11)
--   Manipulação de Arquivos Binários (`fopen`, `fread`, `fwrite`, `fseek`, `ftell`, `rewind`)
+Para atender aos requisitos do Professor Renan, foquei em utilizar as funções da biblioteca padrão para gerenciar os dados de forma eficiente:
 
-## Como Compilar e Executar
+*   **Acesso Aleatório com `fseek`:** No cadastro de clientes, utilizei o `fseek` para calcular a posição exata onde o registro deve ser gravado. Isso permite inserir um cliente em qualquer "índice" do arquivo sem precisar ler tudo antes.
+*   **Manipulação do Ponteiro com `rewind`:** Implementei uma função específica para restaurar a leitura (opção 6). Usei o `rewind` para garantir que o ponteiro do arquivo volte ao início, permitindo que a listagem de clientes seja reiniciada corretamente.
+*   **Exclusão Lógica:** Na remoção de contas, em vez de deletar o dado fisicamente (o que exigiria reestruturar o arquivo), utilizei uma flag `ativo` dentro da struct. Assim, apenas marcamos a conta como desativada.
+*   **Atualização de Dados:** Para atualizar o saldo, o programa localiza o registro, usa o `ftell` para saber onde ele está e o `fseek` para voltar o tamanho de um registro e sobrescrever apenas aquele saldo com `fwrite`.
 
-Certifique-se de ter um compilador C instalado (como GCC).
+## Como Executar
 
-1.  Abra o terminal na pasta do projeto.
-2.  Compile o código:
+O projeto foi configurado para ser executado diretamente pelo terminal, mantendo o diretório limpo e focado no código-fonte.
+
+1.  **Compilação:**
     ```bash
-    gcc main.c -o manutencao_contas
+    gcc main.c -o sistema_contas
     ```
-3.  Execute o programa:
+2.  **Execução:**
     ```bash
-    ./manutencao_contas
+    ./sistema_contas
     ```
 
-## Estrutura de Dados
-
-A estrutura utilizada para representar um cliente é:
-
-```c
-typedef struct {
-    int numero_conta;
-    char nome[50];
-    double saldo;
-    bool ativo;
-} Cliente;
-```
+---
+*Desenvolvido para fins acadêmicos.*
